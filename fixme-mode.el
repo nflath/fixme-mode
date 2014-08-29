@@ -4,7 +4,7 @@
 
 ;; Author: Nathaniel Flath <flat0103@gmail.com>
 ;; URL: http://github.com/nflath/fixme-mode
-;; Version: 1.0
+;; Version: 1.0.1
 
 ;; This file is not part of GNU Emacs.
 
@@ -54,4 +54,5 @@
     ))
 
 (add-hook 'prog-mode-hook (lambda () (fixme-mode t)))
+(provide 'fixme-mode)
 ;;; fixme-mode.el ends here
