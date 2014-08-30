@@ -44,6 +44,7 @@
 (defvar fixme-mode-warning-words '("FIXME" "TODO" "BUG" "KLUDGE" "FIX" "FixMe" "HACK" "REFACTOR" "NOCOMMIT")
   "List of words to highlight as warnings in fixme-mode")
 
+;;;###autoload
 (define-minor-mode fixme-mode
   "Flag FIXME and other strings as a warning"
   :init-value nil
