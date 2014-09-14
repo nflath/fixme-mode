@@ -41,6 +41,15 @@
 
 ;;; Code:
 
+(defcustom fixme-mode t
+  "Toggle fixme mode..."
+  :set (lambda (symbol value)
+         (fixme-mode-initialize (or value nil)))
+  :initialize 'custom-initialize-default
+  :type 'boolean
+  :group 'fixme-mode
+  :require 'fixme-mode)
+
 (defvar fixme-mode-warning-words '("FIXME" "TODO" "BUG" "KLUDGE" "FIX" "FixMe" "HACK" "REFACTOR" "NOCOMMIT")
   "List of words to highlight as warnings in fixme-mode")
 
@@ -57,9 +66,12 @@
   "Flag FIXME and other strings as a warning"
   :init-value nil
   :group 'fixme-mode
-
   (if fixme-mode (fixme-mode-add-keywords)
     (fixme-mode-remove-keywords)))
+
+(defun fixme-mode-initialize (arg)
+  (if arg (add-hook 'prog-mode-hook (lambda () (fixme-mode t)))
+    (remove-hook 'prog-mode-hook (lambda () (fixme-mode t)))))
 
 (add-hook 'prog-mode-hook (lambda () (fixme-mode t)))
 (provide 'fixme-mode)
