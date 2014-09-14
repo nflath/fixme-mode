@@ -4,7 +4,7 @@
 
 ;; Author: Nathaniel Flath <flat0103@gmail.com>
 ;; URL: http://github.com/nflath/fixme-mode
-;; Version: 1.0.1
+;; Version: 1.0.2
 
 ;; This file is not part of GNU Emacs.
 
@@ -44,14 +44,21 @@
 (defvar fixme-mode-warning-words '("FIXME" "TODO" "BUG" "KLUDGE" "FIX" "FixMe" "HACK" "REFACTOR" "NOCOMMIT")
   "List of words to highlight as warnings in fixme-mode")
 
+(defun fixme-mode-add-keywords ()
+  (font-lock-add-keywords nil  `((,(regexp-opt fixme-mode-warning-words 'words) 1 font-lock-warning-face t)))
+  (font-lock-add-keywords nil  `((,(regexp-opt (mapcar (lambda (x) (concat x ":")) fixme-mode-warning-words) 'words) 1 font-lock-warning-face t))))
+
+(defun fixme-mode-remove-keywords ()
+  (font-lock-remove-keywords nil  `((,(regexp-opt fixme-mode-warning-words 'words) 1 font-lock-warning-face t)))
+  (font-lock-remove-keywords nil  `((,(regexp-opt (mapcar (lambda (x) (concat x ":")) fixme-mode-warning-words) 'words) 1 font-lock-warning-face t))))
+
 (define-minor-mode fixme-mode
   "Flag FIXME and other strings as a warning"
   :init-value nil
   :group 'fixme-mode
 
-  (if fixme-mode (font-lock-add-keywords nil  `((,(regexp-opt fixme-mode-warning-words 'words) 1 font-lock-warning-face t)))
-    (font-lock-remove-keywords nil  `((,(regexp-opt fixme-mode-warning-words 'words) 1 font-lock-warning-face t)))
-    ))
+  (if fixme-mode (fixme-mode-add-keywords)
+    (fixme-mode-remove-keywords)))
 
 (add-hook 'prog-mode-hook (lambda () (fixme-mode t)))
 (provide 'fixme-mode)
