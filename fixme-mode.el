@@ -52,6 +52,7 @@
   (font-lock-remove-keywords nil  `((,(regexp-opt fixme-mode-warning-words 'words) 1 font-lock-warning-face t)))
   (font-lock-remove-keywords nil  `((,(regexp-opt (mapcar (lambda (x) (concat x ":")) fixme-mode-warning-words) 'words) 1 font-lock-warning-face t))))
 
+;;;###autoload
 (define-minor-mode fixme-mode
   "Flag FIXME and other strings as a warning"
   :init-value nil
